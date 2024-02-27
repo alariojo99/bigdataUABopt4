@@ -4,7 +4,7 @@ import json
 import pandas as pd
 
 api_client_id = "2d24e72bccfc459d8c6eb1408f954097"
-api_client_secret = "29126da8bfd742a39389cb3a03766b64"
+api_client_secret = ""
 
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(api_client_id,api_client_secret))
 
