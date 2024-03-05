@@ -3,7 +3,7 @@ import json
 import time
 
 public = "j0vk1o0choelmhc6jg7jc3lzjbhak2"
-secret = "uewk2w88nap80z4e25fqwr7dlbnjtl"
+secret = ""
 
 twitch = Twitch(public, secret)
 
