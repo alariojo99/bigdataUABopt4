@@ -1,2 +1,4 @@
-# bigdataUABopt4
-Treballs de la optativa de Big Data de 4t de Comunicació Interactiva
+# Anàlisi i Visualització de Big Data
+Repositori de l'assignatura de 4t de Comunicació Interactiva a la UAB.
+
+@alariojo99
