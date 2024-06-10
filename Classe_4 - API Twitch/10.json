@@ -1,0 +1,410 @@
+{
+    "data": [
+        {
+            "id": "42001065832",
+            "user_id": "500081308",
+            "user_login": "sofia_fitness",
+            "user_name": "Sofia_Fitness",
+            "game_id": "509658",
+            "game_name": "Just Chatting",
+            "type": "live",
+            "title": "ENTRENAMOS CON AMIGOS🤭🤍 !prozis !redes",
+            "viewer_count": 179,
+            "started_at": "2024-03-05T16:06:53Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_sofia_fitness-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "JUSTCHATTING",
+                "Español",
+                "training",
+                "sports",
+                "workout",
+                "English",
+                "sofiafitness"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42000517768",
+            "user_id": "147558492",
+            "user_login": "kam1esports",
+            "user_name": "kam1esports",
+            "game_id": "516575",
+            "game_name": "VALORANT",
+            "type": "live",
+            "title": "BARCA vs CASE /// VCL ESPAÑA ///  TÚ DOSIS DIARIA DE VALORANT /// !partidos !redes !video",
+            "viewer_count": 172,
+            "started_at": "2024-03-05T14:05:07Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kam1esports-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español",
+                "VALORANＴ",
+                "Analyst"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "50555121437",
+            "user_id": "110855297",
+            "user_login": "charliebusbus",
+            "user_name": "charliebusbus",
+            "game_id": "509658",
+            "game_name": "Just Chatting",
+            "type": "live",
+            "title": "SWM🎧📖 estudia o trabaja con law student | 50/10  pomo 🍵 Sala de Trabajo  !taskinfo !horario",
+            "viewer_count": 160,
+            "started_at": "2024-03-05T14:02:14Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_charliebusbus-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "focuswithme",
+                "studywithme",
+                "focus",
+                "Español",
+                "saladetrabajo",
+                "Derecho",
+                "CoWorking"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "42377041465",
+            "user_id": "421724307",
+            "user_login": "tiscofn",
+            "user_name": "tiscofn",
+            "game_id": "33214",
+            "game_name": "Fortnite",
+            "type": "live",
+            "title": "STREAM CORTO | MAÑANA NUEVO HORARIO | PRIMER !TIKTOK | STREAM 34/366 | Code Tisco #ad",
+            "viewer_count": 159,
+            "started_at": "2024-03-05T15:14:25Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_tiscofn-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "50555530461",
+            "user_id": "416719291",
+            "user_login": "xhiet0",
+            "user_name": "Xhiet0",
+            "game_id": "512710",
+            "game_name": "Call of Duty: Warzone",
+            "type": "live",
+            "title": "MAÑANA ACTUALIZACIÓN | 15% en !MANDO",
+            "viewer_count": 155,
+            "started_at": "2024-03-05T15:12:59Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_xhiet0-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español",
+                "Xhieto"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "42377055913",
+            "user_id": "52638176",
+            "user_login": "conragen",
+            "user_name": "conragen",
+            "game_id": "143106037",
+            "game_name": "EA Sports FC 24",
+            "type": "live",
+            "title": "ICONO SBC? | NUEVOS SBC Y OBJETIVOS!!! !VIP !DISCORD",
+            "viewer_count": 153,
+            "started_at": "2024-03-05T15:21:27Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_conragen-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español",
+                "colombia",
+                "fútbol"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42000640712",
+            "user_id": "40274559",
+            "user_login": "attila",
+            "user_name": "Attila",
+            "game_id": "21779",
+            "game_name": "League of Legends",
+            "type": "live",
+            "title": "El diseño moderno de la caja de cartón corrugado fue patentado en 1871 por Albert Jones !comandos !tierlist !discord",
+            "viewer_count": 153,
+            "started_at": "2024-03-05T14:33:15Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_attila-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "41999191800",
+            "user_id": "89430595",
+            "user_login": "n1xerino",
+            "user_name": "n1xerino",
+            "game_id": "512953",
+            "game_name": "ELDEN RING",
+            "type": "live",
+            "title": "ELDEN RINGGG - SPOILERS O ACONSEJAR SIN MI PERMISO = PERMABAN -NO HE VISTO NI JUGADO EN MI VIDA !reglas !darksouls !ds2",
+            "viewer_count": 152,
+            "started_at": "2024-03-05T09:31:45Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_n1xerino-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "valorant",
+                "Español",
+                "radiant",
+                "radiante",
+                "darksouls",
+                "ds1",
+                "ds3",
+                "darksouls3",
+                "soulslike"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "50555526349",
+            "user_id": "690627187",
+            "user_login": "ftkpokerftk",
+            "user_name": "ftkpokerftk",
+            "game_id": "263490",
+            "game_name": "Rust",
+            "type": "live",
+            "title": "chill",
+            "viewer_count": 152,
+            "started_at": "2024-03-05T15:11:56Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_ftkpokerftk-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42000968552",
+            "user_id": "81907192",
+            "user_login": "eldelabarrapan",
+            "user_name": "eldelabarrapan",
+            "game_id": "21779",
+            "game_name": "League of Legends",
+            "type": "live",
+            "title": "Shyvana RANK 1",
+            "viewer_count": 150,
+            "started_at": "2024-03-05T15:45:25Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_eldelabarrapan-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "41999056696",
+            "user_id": "53430598",
+            "user_login": "karmadoc",
+            "user_name": "KarmaDoc",
+            "game_id": "870905192",
+            "game_name": "Yakuza 3 Remastered",
+            "type": "live",
+            "title": "[40% Completado] !dragon | Stream largo | Yakuza 3 Remastered Ep 11",
+            "viewer_count": 148,
+            "started_at": "2024-03-05T08:51:51Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_karmadoc-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Primerapartida",
+                "Sinspoilers",
+                "Máximadificultad",
+                "Sinayudas",
+                "Español"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "41992197208",
+            "user_id": "715763777",
+            "user_login": "terror_mania_",
+            "user_name": "Terror_Mania_",
+            "game_id": "1092230319",
+            "game_name": "Movie World",
+            "type": "live",
+            "title": "LIVE 24/7",
+            "viewer_count": 148,
+            "started_at": "2024-03-04T04:40:51Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_terror_mania_-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "42000459336",
+            "user_id": "720942678",
+            "user_login": "cadenamixtv",
+            "user_name": "cadenamixtv",
+            "game_id": "2128929587",
+            "game_name": "Radio Station",
+            "type": "live",
+            "title": "CADENAMIX LIVE",
+            "viewer_count": 148,
+            "started_at": "2024-03-05T13:51:31Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_cadenamixtv-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Radio",
+                "Entretenimento",
+                "Futbol",
+                "Deportes",
+                "Español"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42000538696",
+            "user_id": "427412996",
+            "user_login": "gtv_genesis",
+            "user_name": "gtv_genesis",
+            "game_id": "32982",
+            "game_name": "Grand Theft Auto V",
+            "type": "live",
+            "title": "SpainRP | Oficial I Molotov💙🔥⚔️",
+            "viewer_count": 148,
+            "started_at": "2024-03-05T14:11:00Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_gtv_genesis-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español",
+                "minecraft"
+            ],
+            "is_mature": true
+        },
+        {
+            "id": "50554988429",
+            "user_id": "1044832869",
+            "user_login": "brodiewes01",
+            "user_name": "brodiewes01",
+            "game_id": "2897",
+            "game_name": "The Simpsons: Hit & Run",
+            "type": "live",
+            "title": "simpsons viejos maraton",
+            "viewer_count": 146,
+            "started_at": "2024-03-05T13:24:09Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_brodiewes01-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español",
+                "rdjavi",
+                "Spreen",
+                "dragonball",
+                "simpsons",
+                "LOSSIMPSONSENVIVO",
+                "LOSSIMPSONENVIVO24HORAS",
+                "English"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42376771369",
+            "user_id": "792951977",
+            "user_login": "kashcolombia",
+            "user_name": "kashcolombia",
+            "game_id": "",
+            "game_name": "",
+            "type": "live",
+            "title": "Kash",
+            "viewer_count": 142,
+            "started_at": "2024-03-05T12:38:31Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kashcolombia-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42376855849",
+            "user_id": "942779021",
+            "user_login": "ztokingdota",
+            "user_name": "ztokingDOTA",
+            "game_id": "29595",
+            "game_name": "Dota 2",
+            "type": "live",
+            "title": "EL MEJOR ANALISTA DEL PERU - SOLTANDO LAS FIJITAS - @ztokingdota !betboom",
+            "viewer_count": 139,
+            "started_at": "2024-03-05T13:38:43Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_ztokingdota-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42376897529",
+            "user_id": "634142770",
+            "user_login": "elcammarota",
+            "user_name": "elcammarota",
+            "game_id": "417752",
+            "game_name": "Talk Shows & Podcasts",
+            "type": "live",
+            "title": "Justicia Infinita en vivo de 11 a 14 por M24",
+            "viewer_count": 127,
+            "started_at": "2024-03-05T14:02:28Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_elcammarota-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español",
+                "Radio"
+            ],
+            "is_mature": false
+        },
+        {
+            "id": "42376983337",
+            "user_id": "170896088",
+            "user_login": "musaslots",
+            "user_name": "MusaSlots",
+            "game_id": "498566",
+            "game_name": "Slots",
+            "type": "live",
+            "title": "Calls por tipeo raw en 1xbet || !1xbet !redes",
+            "viewer_count": 123,
+            "started_at": "2024-03-05T14:48:52Z",
+            "language": "es",
+            "thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_musaslots-{width}x{height}.jpg",
+            "tag_ids": [],
+            "tags": [
+                "Español"
+            ],
+            "is_mature": false
+        }
+    ],
+    "pagination": {
+        "cursor": "eyJiIjp7IkN1cnNvciI6ImV5SnpJam94TnprdU5EZzBNemN4TXpVMk56YzRPRGNzSW1RaU9tWmhiSE5sTENKMElqcDBjblZsZlE9PSJ9LCJhIjp7IkN1cnNvciI6ImV5SnpJam94TkRJdU5EZzBNamN4TXpVMk56YzRPRFlzSW1RaU9tWmhiSE5sTENKMElqcDBjblZsZlE9PSJ9fQ"
+    }
+}
