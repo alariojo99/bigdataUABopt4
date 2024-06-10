@@ -1,1 +1,1 @@
-Pàgina web amb l'article en el fitcer: futbol.html
+Pàgina web amb l'article en el fitxer: futbol.html
