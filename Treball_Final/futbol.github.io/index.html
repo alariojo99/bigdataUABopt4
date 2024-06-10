@@ -1,1 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treball Final - OPtativa Big Data 4rt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+        }
+
+        body{
+            height: 100%;
+            width: 100%;
+            padding: 0px 400px;
+        }
+
+        h1{
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 5px;
+            color: white;
+        }
+
+        h2{
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 8px 5px;
+            color: white;
+            margin-top: 20px;
+        }
+
+        h3{
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 6px 5px;
+        }
+
+        h4{
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 4px 5px;
+        }
+
+
+        p{
+            line-height: 30px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <header>
+        <p>Autors: Gerard Sarri, Jordi Ciurana i Alejandro Lario</p>
+    </header>
+    <h1>Evolució del futbol per posicions</h1>
+    <h2>Introducció</h2>
+    <p>
+        En el panorama contemporani del futbol, l'anàlisi de dades s'ha convertit en una eina imprescindible per a clubs, entrenadors i analistes per comprendre els factors clau que influeixen en el rendiment dels jugadors i equips.
+        <br>
+        En aquest context, el present treball es centra en analitzar un conjunt de dades procedent de Transfermarkt, una plataforma líder en la recopilació d'informació relacionada amb el mercat de fitxatges i estadístiques de jugadors a nivell mundial.
+    </p>
+    <h2>Objectius</h2>
+    <p>
+        L'objectiu és analitzar l'evolució històrica del futbol mitjançant les posicions dels jugadors, investigant canvis en el rendiment i les estadístiques clau d'aquests jugadors.
+        <br>
+        Amb l'objectiu de proporcionar una anàlisi exhaustiva i rigorosa, aquest treball s'endinsa en la vasta quantitat de dades disponibles, destacant patrons, correlacions i tendències que ajuden a entendre millor la dinàmica del mercat de fitxatges i el rendiment dels jugadors de futbol a nivell global.
+        <br>
+        A través de tècniques d'anàlisi en dades massives s'aprofundeix en la comprensió de l'evolució històrica del futbol, identificant patrons, correlacions i tendències significatives en el rendiment individual i col·lectiu en diferents escenaris de joc.
+    </p>
+    <h2>Part tècnica</h2>
+    <h3>Extracció i unió de dades de jugadors de futbol</h3>
+    <p>
+        Aquest codi està dissenyat per extreure informació detallada sobre jugadors de futbol de la pàgina web Transfermarkt i guardar-la en fitxers Excel. Utilitza biblioteques com requests, BeautifulSoup i pandas per realitzar la tasca. A continuació es descriu el funcionament del codi en detall.
+    </p>
+    <h4>Imports necessàris</h4>
+    <p>
+        Aquestes són les biblioteques necessàries per fer sol·licituds HTTP, parsejar HTML, gestionar dades amb dataframes, introduir retards aleatoris i treballar amb operacions del sistema i expressions regulars.
+    </p>
+
+    <pre>
+    <code>
+        import requests
+        from bs4 import BeautifulSou 
+        import pandas as p
+        import tim
+        import random
+        import os
+        import re
+    </code>
+</pre>
+    <h4>Funció <code>extraer_y_juntar</code></h4>
+    <p>
+        La funció extraer_y_juntar es dissenya per recollir dades de jugadors de futbol des 
+    </p>
+
+    <pre>
+        <code>
+def extraer_y_juntar(numero_jugador, random_number):
+
+for jugador in numero_jugador:
+    try:
+        if not numero_jugador:  # Verificar si la lista est&aacute; vac&iacute;a
+            print(&quot;La lista de n&uacute;meros de jugador est&aacute; vac&iacute;a.&quot;)
+            break
+
+        headers = {
+            &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 OPR/107.0.0.0&quot;
+        }
+
+        resposta = requests.get(
+            f&quot;https://www.transfermarkt.com/lionel-messi/leistungsdatendetails/spieler/{jugador}/saison//verein/0/liga/0/wettbewerb//pos/0/trainer_id/0/plus/1&quot;,
+            headers=headers,
+        )
+
+        resposta.raise_for_status()  # Lanzar excepci&oacute;n en caso de error HTTP
+        </code>
+    </pre>
+
+    <p>
+        La funció comença amb un bucle for que itera sobre cada número de jugador a la llista numero_jugador. Si la llista està buida, es mostra un missatge i es trenca el bucle. Es defineixen les capçaleres per la sol·licitud HTTP per simular un navegador web i es fa una sol·licitud GET a l'URL de Transfermarkt per obtenir les dades del jugador amb l'ID jugador. La funció raise_for_status() llança una excepció si la sol·licitud no té èxit (p.ex., retorna un error 404).
+    </p>
+
+    <pre>
+        <code>
+soup = BeautifulSoup(resposta.text, &quot;html.parser&quot;)
+final = soup.find(&quot;div&quot;, id=&quot;yw1&quot;)
+tabla = final.find_next(&quot;table&quot;)
+
+nom = soup.find(&quot;h1&quot;, class_=&quot;data-header__headline-wrapper&quot;).text
+nom = re.sub(r'[^a-zA-Z\s]', '', nom).strip()
+
+df = pd.read_html(tabla.prettify())[0]
+
+# Agregar columna de nombre del jugador
+df[&quot;name&quot;] = nom
+
+#Afegir la columna ID
+df[&quot;id_jugador&quot;] = jugador
+
+        </code>
+    </pre>
+
+<p>
+    El contingut de la resposta es parseja utilitzant BeautifulSoup per obtenir la taula de dades del rendiment del jugador. Es troba l'element HTML que conté el nom del jugador i es neteja el text del nom utilitzant una expressió regular per eliminar caràcters no alfabètics. La taula HTML es converteix en un DataFrame de pandas i es creen noves columnes per incloure el nom del jugador i l'ID del jugador.
+</p>
+
+<pre>
+    <code>
+posicion = soup.find_all(&quot;li&quot;, class_=&quot;data-header__label&quot;)
+pos = posicion[4]
+a = pos.find_all(&quot;span&quot;)
+position_text = &quot;&quot;
+for span in a:
+    position_text += span.text.strip() + &quot; &quot;
+df[&quot;position_text&quot;] = position_text.strip()
+
+
+df.to_excel(f&quot;player_{jugador}.xlsx&quot;, index=False)
+time.sleep(random_number)
+print(f&quot;Todo bien en {jugador}&quot;)
+    </code>
+</pre>
+
+    <p>
+        Es troben tots els elements de la posició dins del HTML i es crea una cadena de text amb totes les posicions trobades, que es guarda en una nova columna al DataFrame. Es guarda el DataFrame en un fitxer Excel amb el nom basat en l'ID del jugador i s'introdueix un retard aleatori entre 1 i 3 segons abans de processar el següent jugador. Es mostra un missatge indicant que el processament del jugador ha estat correcte.
+    </p>
+
+    <pre>
+        <code>
+df = pd.read_excel(f&quot;player_{jugador}.xlsx&quot;)
+df.columns.values[0] = &quot;Season&quot;
+df.columns.values[2] = &quot;Competitici&oacute;&quot;
+df.columns.values[3] = &quot;Club&quot;
+df.columns.values[4] = &quot;Squad&quot;
+df.columns.values[5] = &quot;Appearances&quot;
+df.columns.values[6] = &quot;Points per match&quot;
+df.columns.values[7] = &quot;Goals&quot;
+df.columns.values[8] = &quot;Assists&quot;
+df.columns.values[9] = &quot;Own goals&quot;
+df.columns.values[10] = &quot;Subtitutions on&quot;
+df.columns.values[11] = &quot;Subtitutions off&quot;
+df.columns.values[12] = &quot;Yellow cards&quot;
+df.columns.values[13] = &quot;Second yellow cards&quot;
+df.columns.values[14] = &quot;Red cards&quot;
+df.columns.values[15] = &quot;Penalty goals&quot;
+df.columns.values[16] = &quot;Minutes per goal&quot;
+df.columns.values[17] = &quot;Minutes played&quot;
+
+df = df.drop(&quot;Competition&quot;, axis=1)
+df = df.drop(&quot;Unnamed: 18&quot;, axis=1)
+
+        </code>
+    </pre>
+
+    <p>
+        Després es llegeix el fitxer Excel acabat de crear i es renombren les columnes per fer-les més comprensibles. També s-eliminen columnes no necessàries.
+    </p>
+
+    <pre>
+        <code>
+imagenes = soup.find_all(&quot;img&quot;, class_=&quot;tiny_wappen&quot;)
+
+list_club_names = []
+
+for img in imagenes:
+    club_name = img.get(&quot;alt&quot;)
+    list_club_names.append(club_name)
+
+df2 = pd.DataFrame(list_club_names)
+df[&quot;clubs_ok&quot;] = df2[0]
+df = df.iloc[:-1]  # Eliminar la &uacute;ltima fila
+
+# Guardar el DataFrame final en un nuevo archivo Excel
+df.to_excel(f&quot;player_{jugador}.xlsx&quot;, index=False)
+
+        </code>
+    </pre>
+
+<p>
+    Es troben totes les imatges de clubs dins del HTML i es crea una llista amb els noms dels clubs, que s'afegeix com una nova columna al DataFrame. S'elimina l'última fila del DataFrame i es guarda el DataFrame actualitzat en un fitxer Excel amb el nom basat en l'ID del jugador, per com estaba estructurada la taula vam tenir problemas per poder relacionar cada jugador amb l'equip que jugaba així que finalmente no vam utilizar la dada “Club”, finalmente tampoc ha sigut necessària per l'anàlisi.
+</p>
+
+<pre>
+    <code>
+except requests.exceptions.RequestException as e:
+print(f&quot;Error en la solicitud HTTP para el jugador {jugador}: {e}&quot;)
+# Obtener el &uacute;ltimo jugador procesado con &eacute;xito
+ultimo_jugador = jugador - 1 if jugador != numero_jugador[0] else numero_jugador[0]
+print(f&quot;Reanudando desde el &uacute;ltimo jugador exitoso ({ultimo_jugador})...&quot;)
+break
+except IndexError:
+print(f&quot;Error: No se pudo encontrar la tabla de datos para el jugador {jugador}.&quot;)
+
+continue
+except Exception as e:
+print(f&quot;Error inesperado para el jugador {jugador}: {e}&quot;)
+    </code>
+</pre>
+
+<p>
+    Es gestionen diferents tipus d'errors, com errors de sol·licitud HTTP, errors d'índex i altres errors inesperats. Es mostra un missatge d'error i es reprèn l'execució des de l'últim jugador processat amb èxit en cas d'error.
+</p>
+
+<h4>Utilització de la funció</h4>
+
+<pre>
+    <code>
+numero_jugador = range(99922, 100000, 1)
+random_number = random.randint(1, 3)
+extraer_y_juntar(numero_jugador, random_number)
+    </code>
+
+</pre>
+    <p>
+        Aquesta part defineix una gamma d'IDs de jugadors per processar (numero_jugador) i un número aleatori (random_number) per introduir retards entre les sol·licituds i evitar ser detectats com bots perpetrant un atac, Cada integrant del grup era responsable de fer una crida de 33.333 peticions. Finalment, es crida la funció extraer_y_juntar amb aquests paràmetres. 
+    </p>
+
+    <h4>Verificació i filtratge de dades de jugadors de futbol</h4>
+    <p>
+        Després de fer cadascú 33.333 peticions, vam haver de verificar quantes d'aquestes peticions havien tingut èxit, ja que moltes donaven errors i altres, tot i funcionar, no tenien consistència en l'estructura de les taules a la pàgina web. Alguns dels fitxers Excel generats contenien columnes "Unnamed" que indicaven que les dades estaven mal recollides. Per tant, el següent pas després de fer les 33.333 peticions era veure quantes d'aquestes havien tingut èxit i, després, comprovar quantes de les que havien tingut èxit contenien a la taula alguna columna anomenada "Unnamed" per identificar-les i descartar-les. En total, de les 100.000 peticions, 58.941 van tenir èxit i d'aquestes vam haver de rebutjar 9.120 perquè contenien columnes "Unnamed", per tant, al final ens vam quedar amb un total de 49.821 taules que representen el mateix número de jugadors.
+    </p>
+
+    <h3>Codi per comptar fitxers amb columnes "Unnamed"</h3>
+
+    <p>Aquest codi recorre tots els arxius en el directori especificat, compta quants d'aquests arxius contenen columnes "Unnamed" i retorna el total.</p>
+
+    <pre>
+        <code>
+import os
+import pandas as pd
+
+def count_files_with_unnamed_columns(directory):
+    count = 0
+    # Recorrer todos los archivos en el directorio especificado
+    for filename in os.listdir(directory):
+        if filename.endswith('.xlsx'):
+            print(filename)
+            # Construir el path completo al archivo
+            filepath = os.path.join(directory, filename)
+            try:
+                # Cargar el archivo Excel
+                df = pd.read_excel(filepath)
+                # Comprobar si alguna columna contiene 'Unnamed'
+                if any('Unnamed' in col for col in df.columns):
+                    count += 1
+            except Exception as e:
+                print(f&quot;No se pudo procesar el archivo {filename}: {e}&quot;)
+    return count
+
+# Ruta al directorio donde est&aacute;n los archivos Excel
+directory_path = '.'
+# Llamar a la funci&oacute;n y mostrar el resultado
+unnamed_count = count_files_with_unnamed_columns(directory_path)
+print(f&quot;N&uacute;mero de archivos con columnas 'Unnamed': {unnamed_count}&quot;)
+
+        </code>
+    </pre>
+
+    <h4>Codi per moure els fitxers amb columnes "Unnamed" a una altra carpeta</h4>
+<p>
+    Després de comptar quants fitxers contenien columnes "Unnamed", vam moure aquests fitxers a una altra carpeta per facilitar la seva gestió i deixar només els fitxers bons per unir-los posteriorment.
+</p>
+
+<pre>
+    <code>
+import os
+import pandas as pd
+import shutil
+
+def count_and_move_files_with_unnamed_columns(directory):
+    count = 0
+    # Asegurarse de que la carpeta &quot;archivos_unnamed&quot; existe
+    unnamed_dir = os.path.join(directory, 'archivos_unnamed')
+    if not os.path.exists(unnamed_dir):
+        os.makedirs(unnamed_dir)
+
+    # Recorrer todos los archivos en el directorio especificado
+    for filename in os.listdir(directory):
+        if filename.endswith('.xlsx'):
+            print(filename)
+            # Construir el path completo al archivo
+            filepath = os.path.join(directory, filename)
+            try:
+                # Cargar el archivo Excel
+                df = pd.read_excel(filepath)
+                # Comprobar si alguna columna contiene 'Unnamed'
+                if any('Unnamed' in col for col in df.columns):
+                    count += 1
+                    # Mover archivo a la carpeta &quot;archivos_unnamed&quot;
+                    shutil.move(filepath, os.path.join(unnamed_dir, filename))
+            except Exception as e:
+                print(f&quot;No se pudo procesar el archivo {filename}: {e}&quot;)
+    return count
+
+# Ruta al directorio donde est&aacute;n los archivos Excel
+directory_path = '.'
+# Llamar a la funci&oacute;n y mostrar el resultado
+unnamed_count = count_and_move_files_with_unnamed_columns(directory_path)
+print(f&quot;N&uacute;mero de archivos con columnas 'Unnamed' movidos a 'archivos_unnamed': {unnamed_count}&quot;)
+
+    </code>
+</pre>
+
+<p>
+    Aquest codi assegura que la carpeta "archivos_unnamed" existeix, recorre tots els arxius en el directori especificat, compta quants d'aquests arxius contenen columnes "Unnamed" i mou aquests fitxers a la carpeta "archivos_unnamed".
+</p>
+
+
+<h4>Codi per unir els fitxers restants en un sol arxiu Excel</h4>
+<p>
+    Després de moure els fitxers amb columnes "Unnamed" a una altra carpeta, vam unir els fitxers restants (els bons) en un sol arxiu Excel.
+</p>
+
+<pre>
+    <code>
+def unir_excel_desde_carpeta(nombre_arxiu_sortida):
+# Obtindre la llista d'arxius en el directori actual
+arxius_en_carpeta = os.listdir()
+
+# Filtrar els arxius que acaben en .xlsx
+arxius_excel = [arxiu for arxiu in arxius_en_carpeta if arxiu.endswith('.xlsx')]
+
+# Crear una llista per emmagatzemar els DataFrames de cada arxiu Excel
+llista_dfs = []
+
+# Iterar sobre cada arxiu Excel
+for arxiu in arxius_excel:
+# Llegir l'arxiu Excel i afegir el DataFrame a la llista
+df = pd.read_excel(arxiu)
+llista_dfs.append(df)
+
+# Concatenar tots els DataFrames en un sol
+df_final = pd.concat(llista_dfs)
+
+# Guardar el DataFrame final en un nou arxiu Excel
+df_final.to_excel(nombre_arxiu_sortida, index=False)
+
+print(f&quot;Els arxius Excel a la carpeta s'han unit correctament en '{nombre_arxiu_sortida}'.&quot;)
+
+# Utilitzaci&oacute; de la funci&oacute;
+nombre_arxiu_sortida = &quot;tots_jugadors_total.xlsx&quot;  # Nom de l'arxiu Excel de sortida
+unir_excel_desde_carpeta(nombre_arxiu_sortida)
+
+    </code>
+</pre>
+
+
+<p>
+    Aquest codi recorre tots els fitxers Excel en el directori actual, filtra els fitxers que acaben en .xlsx, crea una llista de DataFrames llegint cada fitxer Excel, concatena tots els DataFrames en un sol DataFrame i guarda aquest DataFrame final en un nou arxiu Excel amb el nom especificat.  <br>
+Amb aquests processos, hem aconseguit verificar, filtrar i unir dades de jugadors de futbol de manera eficient, quedant-nos amb un conjunt de dades de 49.821 jugadors que es poden utilitzar per a qualsevol tipus d'anàlisi o estudi. <br>
+Finalment, cadascú va quedar amb un Excel agrupat de les dades que haviem recol·lectat així que vam tornar a utilizar la funció d’ajuntar els excels per pasar de tenir 3 excels a 1 amb totes les dades recol·lectades.
+
+</p>
+
+<h3>Neteja de dades</h3>
+<p>
+    Després d'haver unit les dades en un sol fitxer Excel, vam procedir a la neteja de dades per assegurar-nos que estiguessin en un format adequat per a l'anàlisi. Hi havia columnes que tenien cel·les amb el valor "-", que vam substituir per "0". A més, les columnes que representaven minuts tenien el símbol "'", cosa que impedia que fossin interpretades com a nombres i les considerava cadenes de text. Vam solucionar aquests problemes i finalment vam convertir l'arxiu Excel en un fitxer CSV.
+</p>
+
+<h4>Codi per substituir "-" per "0"</h4>
+<p>
+    El primer pas en la neteja de dades va ser substituir els valors "-" per "0" en les columnes especificades. Vam utilitzar el següent codi per realitzar aquesta tasca:
+</p>
+<pre>
+    <code>
+def clean_data(filepath):
+# Leer el archivo CSV
+df = pd.read_csv(filepath)
+
+# Lista de columnas a procesar para cambiar &quot;-&quot; por 0
+columns_to_zero = ['Appearances', 'Points per match', 'Goals', 'Assists', 'Own goals',
+                'Subtitutions on', 'Subtitutions off', 'Yellow cards',
+                'Second yellow cards', 'Red cards', 'Penalty goals',
+                'Minutes per goal', 'Minutes played']
+
+# Reemplazar &quot;-&quot; por 0 en las columnas especificadas
+for column in columns_to_zero:
+df[column] = df[column].replace('-', 0)
+
+
+# Guardar el DataFrame modificado en un nuevo archivo CSV
+df.to_csv('cleaned_data.csv', index=False)
+
+# Ruta al archivo CSV original
+filepath = 'tots_jugadors_total.csv'
+clean_data(filepath)
+
+    </code>
+</pre>
+
+<p>
+    Aquest codi llegeix el fitxer CSV, substitueix els valors "-" per "0" en les columnes especificades i guarda el DataFrame modificat en un nou fitxer CSV anomenat cleaned_data.csv.
+</p>
+
+<h3>Codi per netejar les columnes que representen minuts</h3>
+<p>El següent pas va ser netejar les columnes que representen minuts per eliminar el símbol "'", de manera que les dades fossin interpretades com a nombres. Vam utilitzar el següent codi per realitzar aquesta tasca:</p>
+
+<pre>
+    <code>
+def clean_data(filepath):
+# Leer el archivo CSV
+df = pd.read_csv(filepath)
+
+# Lista de columnas a procesar para cambiar &quot;-&quot; por 0
+columns_to_zero = ['Minutes per goal', 'Minutes played']
+
+df['Minutes per goal'] = df['Minutes per goal'].str.replace(&quot;'&quot;, &quot;&quot;)
+df['Minutes played'] = df['Minutes played'].str.replace(&quot;'&quot;, &quot;&quot;)
+
+# Guardar el DataFrame modificado en un nuevo archivo CSV
+df.to_csv('very_cleaned_data.csv', index=False)
+
+# Ruta al archivo CSV original
+filepath = 'cleaned_data.csv'
+clean_data(filepath)
+
+    </code>
+</pre>
+
+<p>
+    Aquest codi llegeix el fitxer CSV, elimina el símbol "'" de les columnes que representen minuts i guarda el DataFrame modificat en un nou fitxer CSV anomenat very_cleaned_data.csv.
+</p>
+
+<h4>Codi per convertir fitxers Excel a CSV</h4>
+<p>
+    Finalment, vam convertir tots els fitxers Excel a fitxers CSV per facilitar-ne la manipulació i l'anàlisi. Vam utilitzar el següent codi per realitzar aquesta tasca:
+</p>
+
+<pre>
+    <code>
+import os
+import pandas as pd
+
+def convert_xlsx_to_csv(directory):
+    # Recorrer todos los archivos en el directorio especificado
+    for filename in os.listdir(directory):
+        if filename.endswith('.xlsx'):
+            print(f"Procesando archivo: {filename}")
+            # Construir el path completo al archivo
+            filepath = os.path.join(directory, filename)
+            # Cargar el archivo Excel
+            df = pd.read_excel(filepath)
+            # Construir el nombre del nuevo archivo CSV
+            csv_filename = filename.replace('.xlsx', '.csv')
+            csv_filepath = os.path.join(directory, csv_filename)
+            # Guardar DataFrame como CSV
+            df.to_csv(csv_filepath, index=False)
+            print(f"Archivo convertido y guardado como: {csv_filename}")
+
+# Ruta al directorio donde están los archivos Excel
+directory_path = '.'
+# Llamar a la función
+convert_xlsx_to_csv(directory_path)
+
+    </code>
+</pre>
+
+<p>
+    Aquest codi recorre tots els fitxers Excel en el directori especificat, carrega cada fitxer Excel en un DataFrame de pandas, i guarda aquest DataFrame com a fitxer CSV amb el mateix nom que l'arxiu original però amb extensió .csv.
+</p>
+
+<h2>La Importància de les Dades en el Futbol: Una Anàlisi Profunda de les Cinc Grans Lligues EuropeesPart divulgativa</h2>
+
+<p>
+    El futbol, amb la seva complexitat tàctica i la seva riquesa estadística, ens proporciona una plataforma ideal per entendre millor el comportament dels jugadors i les dinàmiques dels equips. A través d'un exhaustiu procés de recopilació i anàlisi de dades, aquest estudi explora diversos aspectes clau del futbol europeu, revelant patrons que sovint passen desapercebuts però que són fonamentals per a la presa de decisions estratègiques.
+</p>
+
+<h3>El Cost de Defensar: Targetes i Disciplina</h3>
+
+<p>
+    Les targetes grogues i vermelles són una part inherent del futbol, indicant sovint el nivell d'agressivitat i compromís defensiu d'un jugador. Les dades ens mostren que els Centre-Backs reben la majoria de targetes grogues i vermelles. Amb 387.757 targetes grogues i 16.681 targetes vermelles, aquesta posició destaca per la seva responsabilitat en situacions crítiques, on sovint han de prendre decisions que poden costar sancions severes per evitar gols en contra. Aquesta tendència suggereix la necessitat de revisar les tàctiques defensives i possiblement oferir més suport als defensors centrals per reduir la seva càrrega de treball en aquestes situacions.
+</p>
+
+<div class='tableauPlaceholder' id='viz1718051289989' style='position: relative'><noscript><a href='#'><img alt='Targetes grogues per posició  ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Targetesgroguesperposici&#47;Targetesgroguesperposici&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Targetesgroguesperposici&#47;Targetesgroguesperposici' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Targetesgroguesperposici&#47;Targetesgroguesperposici&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1718051289989');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+<div class='tableauPlaceholder' id='viz1718051299004' style='position: relative'><noscript><a href='#'><img alt='Targetes Vermelles per posició ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Targetesvermellesperposici&#47;TargetesVermellesperposici&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Targetesvermellesperposici&#47;TargetesVermellesperposici' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;Targetesvermellesperposici&#47;TargetesVermellesperposici&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1718051299004');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+    <script>hljs.highlightAll();</script>
+
+<h3>Els Reis del Gol: Màxims Golejadors i la Seva Freqüència</h3>
+
+<p>
+    En l'anàlisi dels màxims golejadors de les cinc grans lligues europees, Lionel Messi emergeix com el màxim golejador de LaLiga amb 474 gols. Aquesta fita no només reflecteix el talent individual sinó també la consistència i la longevitat en una lliga competitiva. A la Premier League, la Serie A, la Bundesliga i la Ligue 1, altres jugadors també brillen, mostrant una distribució diversa de talents golejadors a tot Europa.
+</p>
+
+<div class='tableauPlaceholder' id='viz1718051389285' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Mx&#47;Mximsgolejadorsperlligues&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Mximsgolejadorsperlligues&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Mx&#47;Mximsgolejadorsperlligues&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1718051389285');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='700px';vizElement.style.height='1247px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='700px';vizElement.style.height='1247px';} else { vizElement.style.width='100%';vizElement.style.height='1577px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+<p>
+    La freqüència de gols per posició ens ofereix una visió clara de l'efectivitat ofensiva segons la posició al camp. En aquest gràfic, es presenta el sumatori dels minuts jugats i els gols marcats per cada posició. Els Centre-Forwards són, sense cap dubte, els jugadors més efectius, amb una mitjana d'un gol cada 56 minuts. Aquesta dada s'ha obtingut dividint el temps total jugat pel nombre de gols marcats. Això subratlla la seva importància crítica en la producció ofensiva dels equips. En comparació, els Centre-Backs marquen un gol cada 584 minuts, reflectint la seva menor participació en les accions ofensives però destacant la seva contribució crucial en defensa.
+</p>
+
+<div class='tableauPlaceholder' id='viz1718051418280' style='position: relative'><noscript><a href='#'><img alt='Freqüència de gols per posició ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;fr&#47;freq-gols-per-posicio&#47;Freqnciadegolsperposici&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='freq-gols-per-posicio&#47;Freqnciadegolsperposici' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;fr&#47;freq-gols-per-posicio&#47;Freqnciadegolsperposici&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1718051418280');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+
+<p>
+    Aquestes estadístiques posen de manifest la necessitat d'estratègies que maximitzin les oportunitats per als atacants, ja que són els principals responsables de marcar gols. Els entrenadors poden utilitzar aquesta informació per optimitzar les tàctiques ofensives, assegurant-se que els Centre-Forwards rebin més oportunitats per finalitzar les jugades.
+</p>
+
+<p>
+    
+A més, aquestes dades ajuden a comprendre com els jugadors en diferents posicions poden contribuir de manera diversa a l'èxit de l'equip. Els defensors, tot i marcar menys gols, juguen un paper vital en mantenir la solidesa de l'equip, permetent als atacants concentrar-se en la creació i finalització de les ocasions de gol.
+</p>
+
+<h3> Evolució del Gol: Tendències al Llarg del Temps</h3>
+
+<p>
+    L'evolució dels gols marcats al llarg del temps en les cinc grans lligues europees ens proporciona una perspectiva sobre com han canviat les dinàmiques del futbol. En la Serie A, observem un increment en la mitjana de gols per jugador en cada temporada en les darreres dècades, possiblement influenciat per canvis tàctics i normatius que afavoreixen un joc més ofensiu. De manera similar, la Bundesliga i LaLiga mostren tendències d'increment en els gols, mentre que la Premier League i la Ligue 1 han experimentat fluctuacions però mantenen una mitjana alta de gols per temporada.
+</p>
+
+
+<div class='tableauPlaceholder' id='viz1718051501665' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;Dashboard-evolucio-gols&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Dashboard-evolucio-gols&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Da&#47;Dashboard-evolucio-gols&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1718051501665');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='700px';vizElement.style.height='1027px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='700px';vizElement.style.height='1027px';} else { vizElement.style.width='100%';vizElement.style.height='1477px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+
+
+<h3> Eficiència i Rendiment: Gols en Comparació als Minuts Jugats</h3>
+
+<p>
+    Comparar els gols marcats amb els minuts jugats revela els jugadors més efectius en termes de rendiment per minut de joc. Cristiano Ronaldo, amb 751 gols en 82.269 minuts jugats, exemplifica un nivell excepcional d'eficiència golejadora. Aquest tipus d'anàlisi és crucial per identificar els jugadors que no només són prolífics golejadors, sinó també extremadament consistents en el seu rendiment al llarg del temps.
+</p>
+
+<div class='tableauPlaceholder' id='viz1718051600007' style='position: relative'><noscript><a href='#'><img alt='Gols marcats amb comparació als minuts jugats ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Go&#47;Golsmarcatsperminut&#47;Hoja6&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Golsmarcatsperminut&#47;Hoja6' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Go&#47;Golsmarcatsperminut&#47;Hoja6&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='es-ES' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1718051600007');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+<h2>Conclusions i Futures Investigacions</h2>
+<p>Aquest estudi revela com les dades poden transformar la nostra comprensió del futbol, oferint una visió detallada dels patrons de comportament dels jugadors i les dinàmiques dels equips. Les targetes rebudes per posició, la freqüència de gols, l'evolució dels gols marcats i les estratègies de substitució són aspectes que poden ser millorats amb una anàlisi de dades rigorosa.
+
+    Per a futures investigacions, seria interessant explorar com factors com les condicions físiques dels jugadors, les tàctiques específiques de l'equip i les diferències entre lligues influeixen en les sancions i el rendiment dels jugadors. A més, una comparació entre diferents èpoques del futbol podria revelar com han evolucionat les tàctiques i l'estil de joc, ajudant a predir futures tendències i a desenvolupar noves estratègies per millorar el rendiment dels equips.</p>
+
+    <p>Després d'haver dut a terme aquest treball d'anàlisi de dades utilitzant tècniques de web scraping a Transfermarkt, es poden extreure diverses conclusions importants.</p>
+
+    <h3>Limitacions del Web Scraping</h3>
+
+    <p>En primer lloc, la tècnica de web scraping no és gaire recomanable per a la recopilació de dades a gran escala, com hem intentat en aquest projecte. Hi ha diverses raons que sustenten aquesta afirmació:</p>
+
+    <ul><li><strong>Problemes d'Ètica de Dades</strong>: El web scraping sovint implica accedir a dades sense el consentiment explícit del propietari del lloc web, la qual cosa pot anar en contra dels principis d'ètica en la recopilació de dades. Aquest tipus de pràctiques poden causar problemes legals i ètics, ja que moltes plataformes, incloent Transfermarkt, tenen termes d'ús que prohibeixen explícitament aquestes activitats.</li><li><strong>Optimització del Lloc Web</strong>: Transfermarkt està molt mal optimitzat per a l'extracció de dades mitjançant web scraping. Durant el procés, vam trobar nombroses dificultats, com ara la càrrega dinàmica de contingut mitjançant JavaScript, estructures HTML canviants i la inclusió de mesures anti-scraping com a CAPTCHAs. És probable que aquestes dificultats estiguin implementades de manera intencionada per evitar el scraping, ja que Transfermarkt té els recursos suficients per optimitzar el seu lloc web si així ho desitgés.</li></ul>
+
+    <h3>Recomanacions</h3>
+    <p>A la llum d'aquestes conclusions, es recomana explorar altres mètodes per obtenir dades de qualitat sobre jugadors de futbol:</p>
+    <ul><li><strong>APIs Oficials</strong>: Quan sigui possible, és preferible utilitzar APIs oficials proporcionades pels mateixos serveis. Aquestes APIs solen ser més fiables, estan optimitzades per al consum de dades i compleixen amb les normatives i principis ètics.</li><li><strong>Col·laboracions Directes</strong>: Establir col·laboracions amb les plataformes que gestionen aquestes dades pot permetre l'accés a informació més completa i precisa, a més de garantir que es respecten les lleis de propietat de dades.</li></ul>
+
+    <p>En conclusió, tot i que hem pogut obtenir dades valuoses mitjançant web scraping, aquest mètode presenta moltes limitacions i riscos. És essencial buscar alternatives més ètiques i sostenibles per a la recopilació de dades en futurs projectes d'anàlisi.</p>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <p>Autors: Gerard Sarri, Jordi Ciurana i Alejandro Lario</p>
+
+
+</body>
+</html>
